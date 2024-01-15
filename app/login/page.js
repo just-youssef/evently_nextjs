@@ -1,9 +1,11 @@
 "use client";
 
+import { setToken } from "@lib/features/tokenReducer";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import { useRouter, redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const router = useRouter();
@@ -13,11 +15,8 @@ const Login = () => {
   const [emailError, setEmailError] = useState({ value: false, msg: "" });
   const [passwordError, setPasswordError] = useState({ value: false, msg: "" });
 
-  const [token, setToken] = useState("");
-  useEffect(() => {
-    const temp = localStorage.getItem("token");
-    setToken(temp);
-  }, []);
+  const token = useSelector((state) => state.userToken.value) || "";
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -46,8 +45,7 @@ const Login = () => {
       }
 
       if (res.status === 200) {
-        localStorage.setItem("token", data.jwt);
-        router.push("/");
+        dispatch(setToken(data.jwt))
       }
     } catch (err) {
       console.log(err);

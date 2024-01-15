@@ -1,7 +1,7 @@
 import '@styles/globals.css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { Navbar } from '@components';
-import StoreProvider from '@lib/StoreProvider';
+import StoreProvider from '@components/StoreProvider';
 import MUIThemeProvider from '@components/MUIThemeProvider';
 
 export const metadata = {

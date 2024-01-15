@@ -4,7 +4,9 @@ import { Button, IconButton, Stack, TextField, Typography } from "@mui/material"
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { useRouter, redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "@lib/features/tokenReducer";
 
 const Register = () => {
   const router = useRouter();
@@ -16,11 +18,8 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState({ value: false, msg: "" });
   const [confirmPasswordError, setConfirmPasswordError] = useState({ value: false, msg: "" });
 
-  const [token, setToken] = useState("");
-  useEffect(() => {
-    const temp = localStorage.getItem("token");
-    setToken(temp);
-  }, [])
+  const token = useSelector((state) => state.userToken.value);
+  const dispatch = useDispatch();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -53,8 +52,7 @@ const Register = () => {
       }
 
       if (res.status === 200) {
-        localStorage.setItem("token", data.jwt)
-        router.push("/")
+        dispatch(setToken(data.jwt))
       }
     } catch (err) {
       console.log(err);

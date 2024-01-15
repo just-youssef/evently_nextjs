@@ -1,20 +1,12 @@
 "use client"
 
 import { createTheme } from '@mui/material/styles';
-import { grey, blue} from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { useEffect } from 'react';
-import { setDarkMode } from '@lib/features/darkModeReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MUIThemeProvider = ({ children }) => {
-    const dispatch = useDispatch();
-    useEffect(()=>{
-        const darkModeCache = localStorage.getItem("darkMode");
-        if (darkModeCache) dispatch(setDarkMode(JSON.parse(darkModeCache)))
-    }, [])
-
     const darkModeState = useSelector((state) => state.darkMode.value)
     const theme = createTheme({
         typography: {

@@ -1,22 +1,22 @@
 "use client";
 
+import { clearToken } from "@lib/features/tokenReducer";
 import { Box, Button, Stack, Typography } from "@mui/material"
 import jwt from "jsonwebtoken";
 import Link from "next/link"
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
-  const [token, setToken] = useState("");
+  const token = useSelector((state) => state.userToken.value);
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const temp = localStorage.getItem("token");
-    setToken(temp);
-  }, [])
-
+  const router = useRouter();
+  
   const logout = () => {
-    localStorage.removeItem("token");
-    location.reload();
+    dispatch(clearToken())
+    router.push('/')
   }
 
   const fetchUser = async (token) => {

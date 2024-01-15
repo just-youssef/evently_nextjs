@@ -9,11 +9,12 @@ import { toggleDarkMode } from '@lib/features/darkModeReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
-
 const Navbar = () => {
   const router = useRouter();
   const darkModeState = useSelector((state) => state.darkMode.value)
   const dispatch = useDispatch()
+
+  const token = useSelector((state) => state.userToken.value);
 
   return (
     <Stack
@@ -48,19 +49,29 @@ const Navbar = () => {
           {darkModeState ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
 
-        <Link href="/login">
-          <Button variant="contained">
-            Login
-          </Button>
-        </Link>
+        {
+          token ?
+            <Link href="/addEvent">
+              <Button variant="outlined">
+                Add Event
+              </Button>
+            </Link>
+            : <>
+              <Link href="/login">
+                <Button variant="contained">
+                  Login
+                </Button>
+              </Link>
 
-        <Typography color="text.secondary">OR</Typography>
+              <Typography color="text.secondary">OR</Typography>
 
-        <Link href="/register">
-          <Button variant="outlined">
-            Register
-          </Button>
-        </Link>
+              <Link href="/register">
+                <Button variant="outlined">
+                  Register
+                </Button>
+              </Link>
+            </>
+        }
       </Stack>
     </Stack>
   );
