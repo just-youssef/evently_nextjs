@@ -1,95 +1,106 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
 
-export default function Home() {
+import { Box, Button, Stack, Typography } from "@mui/material"
+import jwt from "jsonwebtoken";
+import Link from "next/link"
+import { useEffect, useState } from "react";
+
+const Home = () => {
+  const [token, setToken] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const temp = localStorage.getItem("token");
+    setToken(temp);
+  }, [])
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    location.reload();
+  }
+
+  const fetchUser = async (token) => {
+    try {
+      const { userID } = jwt.decode(token);
+
+      const res = await fetch(`http://localhost:8000/api/user/${userID}`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": token
+        }
+      });
+
+      const data = await res.json();
+      setUser(data);
+
+      return data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (token) {
+    // get user details
+    fetchUser(token);
+
+    return (
+      <Stack
+        direction="column"
+        p={4} my={8} bgcolor='background.paper'
+        border={1} borderRadius={1} borderColor="grey.600"
+        alignItems="center" boxShadow={8}
+        width={{ sm: 2/3, md: 1/2, lg: 1/3 }} mx={{ xs: 2, sm: "auto" }}
+      >
+        <Typography fontSize={25}>welcome {user?.username}</Typography>
+        <Typography fontSize={15} color="text.secondary">{user?.email}</Typography>
+        <Button
+          size="large"
+          sx={{ px: { md: 5 }, mt: 4 }}
+          variant="contained"
+          onClick={logout}
+        >
+          Logout
+        </Button>
+      </Stack>
+    )
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        p: 4,
+        my: 8,
+        bgcolor: 'background.paper',
+        border: 1,
+        borderRadius: 1,
+        borderColor: "grey.600",
+        justifyContent: 'space-evenly',
+        width: { sm: 2/3, md: 1/2, lg: 1/3 },
+        mx: { xs: 2, sm: "auto" },
+        boxShadow: 8
+      }}
+    >
+      <Link href="/login">
+        <Button
+          size="large"
+          sx={{ px: { md: 5 } }}
+          variant="contained"
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+          Login
+        </Button>
+      </Link>
+      <Link href="/register">
+        <Button
+          size="large"
+          sx={{ px: { md: 5 } }}
+          variant="outlined"
         >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          Register
+        </Button>
+      </Link>
+    </Box>
   )
 }
+
+export default Home
