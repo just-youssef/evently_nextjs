@@ -1,7 +1,7 @@
 "use client"
 
 import { createTheme } from '@mui/material/styles';
-import { grey } from '@mui/material/colors';
+import { grey, blue} from '@mui/material/colors';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';

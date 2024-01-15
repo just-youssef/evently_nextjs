@@ -78,7 +78,7 @@ const Login = () => {
       }}
     >
       <Typography fontSize={24} color="text.secondary">
-        Login to AppName
+        Login to Evently
       </Typography>
       <TextField
         id="email"

@@ -73,7 +73,7 @@ const Register = () => {
       width={{ sm: 2 / 3, md: 1 / 2, lg: 1 / 3 }} mx={{ xs: 2, sm: "auto" }}
       bgcolor="background.paper" boxShadow={8}
     >
-      <Typography fontSize={24} color="text.secondary">Register to AppName</Typography>
+      <Typography fontSize={24} color="text.secondary">Register to Evently</Typography>
       <TextField
         id="username" label="Username" variant="outlined" fullWidth required error={usernameError.value} helperText={usernameError.msg}
         sx={{ mb: 1 }} placeholder="example_user26" onChange={e => setUser({ ...user, username: e.target.value })}

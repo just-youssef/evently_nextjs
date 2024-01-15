@@ -1,12 +1,13 @@
 "use client"
 
-import { AppBar, Toolbar, Typography, Switch, IconButton } from '@mui/material';
-import AutoModeIcon from '@mui/icons-material/AutoMode';
+import { Typography, IconButton, Button, Stack } from '@mui/material';
+import EventIcon from '@mui/icons-material/Event';
 import { useRouter } from "next/navigation";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { toggleDarkMode } from '@lib/features/darkModeReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 
 const Navbar = () => {
@@ -15,8 +16,14 @@ const Navbar = () => {
   const dispatch = useDispatch()
 
   return (
-    <AppBar position="static" elevation={1}>
-      <Toolbar>
+    <Stack
+      direction="row" alignItems="center" justifyContent="space-between"
+      sx={{ px: 4, py: 1, boxShadow: 5, bgcolor: "background.paper" }}
+    >
+      <Stack
+        direction="row"
+        alignItems="center"
+      >
         <IconButton
           size="large"
           edge="start"
@@ -24,26 +31,38 @@ const Navbar = () => {
           aria-label="refresh"
           onClick={() => { router.push('/') }}
         >
-          <AutoModeIcon />
+          <EventIcon />
         </IconButton>
 
-        <Typography fontSize={{ xs: 20, sm: 25 }} component="div" sx={{ flexGrow: 1 }}>
-          Navbar
+        <Typography
+          fontSize={25}
+          component="div"
+          sx={{ display: { xs: 'none', sm: 'block' } }}
+        >
+          Evently
         </Typography>
+      </Stack>
 
-        <Switch
-          color='secondary'
-          inputProps={{ 'aria-label': 'Switch Color Mode' }}
-          onChange={() => dispatch(toggleDarkMode())}
-          checked={darkModeState}
-        />
-
+      <Stack direction="row" gap={1} alignItems="center">
         <IconButton onClick={() => dispatch(toggleDarkMode())} color="inherit">
           {darkModeState ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
 
-      </Toolbar>
-    </AppBar>
+        <Link href="/login">
+          <Button variant="contained">
+            Login
+          </Button>
+        </Link>
+
+        <Typography color="text.secondary">OR</Typography>
+
+        <Link href="/register">
+          <Button variant="outlined">
+            Register
+          </Button>
+        </Link>
+      </Stack>
+    </Stack>
   );
 }
 
