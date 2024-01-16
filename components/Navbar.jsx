@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch(clearToken())
-    router.push('/')
+    // router.push('/')
   }
 
   return (
