@@ -1,8 +1,6 @@
 import '@styles/globals.css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import { Navbar } from '@components';
-import StoreProvider from '@components/StoreProvider';
-import MUIThemeProvider from '@components/MUIThemeProvider';
+import { DateProvider, MUIThemeProvider, Navbar, StoreProvider } from '@components';
 
 export const metadata = {
   title: 'Evently',
@@ -16,8 +14,10 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider>
           <StoreProvider>
             <MUIThemeProvider>
-              <Navbar />
-              {children}
+              <DateProvider>
+                <Navbar />
+                {children}
+              </DateProvider>
             </MUIThemeProvider>
           </StoreProvider>
         </AppRouterCacheProvider>

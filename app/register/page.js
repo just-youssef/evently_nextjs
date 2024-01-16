@@ -57,7 +57,6 @@ const Register = () => {
     } catch (err) {
       console.log(err);
     }
-
   }
 
   if (token) redirect("/");

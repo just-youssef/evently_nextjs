@@ -8,6 +8,9 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { toggleDarkMode } from '@lib/features/darkModeReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import { clearToken } from '@lib/features/tokenReducer';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = () => {
   const router = useRouter();
@@ -15,6 +18,11 @@ const Navbar = () => {
   const dispatch = useDispatch()
 
   const token = useSelector((state) => state.userToken.value);
+
+  const logout = () => {
+    dispatch(clearToken())
+    router.push('/')
+  }
 
   return (
     <Stack
@@ -51,11 +59,35 @@ const Navbar = () => {
 
         {
           token ?
-            <Link href="/addEvent">
-              <Button variant="outlined">
+            <>
+            
+              <Button
+                variant="contained"
+                onClick={() => router.push("/addEvent")}
+                sx={{ display: { xs: 'none', sm: 'block' } }}
+              >
                 Add Event
               </Button>
-            </Link>
+              <Button variant="outlined" onClick={logout} sx={{display: {xs: 'none', sm: 'block'}}}>
+                  Logout
+              </Button>
+
+              {/* mobile buttons */}
+              <IconButton
+                onClick={() => router.push("/addEvent")}
+                sx={{ display: { sm: 'none' } }}
+                color='primary'
+              >
+                <AddToPhotosIcon />
+              </IconButton>
+              <IconButton
+                onClick={logout}
+                sx={{ display: { sm: 'none' } }}
+                color='inherit'
+              >
+                <LogoutIcon />
+              </IconButton>
+            </>
             : <>
               <Link href="/login">
                 <Button variant="contained">
