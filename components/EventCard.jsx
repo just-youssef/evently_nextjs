@@ -10,6 +10,8 @@ import jwt from "jsonwebtoken";
 import PlaceIcon from '@mui/icons-material/Place';
 import EventIcon from '@mui/icons-material/Event';
 import TimelapseIcon from '@mui/icons-material/Timelapse';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Link from 'next/link';
 
 const EventCard = ({ event }) => {
   const token = useSelector((state) => state.userToken.value);
@@ -17,27 +19,62 @@ const EventCard = ({ event }) => {
   const [currentUserID, setCurrentUserID] = useState("");
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [confirmBookOpen, setConfirmBookOpen] = useState(false);
+  const [ticketBooked, setTicketBooked] = useState(false);
 
-  useEffect(()=>{
-    if(token){
+  useEffect(() => {
+    if (token) {
       const { userID } = jwt.decode(token);
       setCurrentUserID(userID);
     }
-  }, [])
 
-  const handleDelete = async() => {
+    const checkTicketBook = async () => {
+      try {
+        const res = await fetch(`http://localhost:8000/api/ticket/${event._id}`, {
+          headers: {
+            'x-auth-token': token,
+          }
+        });
+        if (res.ok) {
+          setTicketBooked(true)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    checkTicketBook();
+  }, [token, ticketBooked])
+
+  const handleDelete = async () => {
     setConfirmDeleteOpen(false);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/event/${event._id}`, {
+      await fetch(`http://localhost:8000/api/event/${event._id}`, {
         method: "DELETE",
         headers: {
           'x-auth-token': token,
         },
       });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleBook = async () => {
+    setConfirmBookOpen(false);
+
+    try {
+      const res = await fetch(`http://localhost:8000/api/ticket/${event._id}`, {
+        method: "POST",
+        headers: {
+          'x-auth-token': token,
+        },
+      });
       const data = await res.json();
-      
-      console.log(data);
+
+      if (data.ticketID) {
+        setTicketBooked(true)
+      }
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +85,7 @@ const EventCard = ({ event }) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: {xs: 2/3, md: 1/2, lg: 1/3},
+    width: { xs: 2 / 3, md: 1 / 2, lg: 1 / 3 },
     bgcolor: 'background.paper',
     border: 1,
     borderRadius: 1,
@@ -56,14 +93,20 @@ const EventCard = ({ event }) => {
     p: 4,
   };
 
-
+  const openConfirmBook = () => {
+    if(token){
+      setConfirmBookOpen(true)
+    } else {
+      router.push('/login')
+    }
+  }
   return (
     <Stack
-    direction="column"
-    justifyContent="center"
-    bgcolor="background.paper" boxShadow={4}
-    border={1} borderRadius={1} borderColor="grey.600"
-    px={3} pb={5} pt={3}
+      direction="column"
+      justifyContent="center"
+      bgcolor="background.paper" boxShadow={4}
+      border={1} borderRadius={1} borderColor="grey.600"
+      px={3} pb={5} pt={3}
     >
       {
         (token && currentUserID == event.organizer._id) ? (
@@ -76,33 +119,37 @@ const EventCard = ({ event }) => {
               onClose={() => setConfirmDeleteOpen(false)}
             >
               <Stack
-              direction="column" alignContent="center" alignItems="center" gap={4}
-              sx={modalStyle}
+                direction="column" gap={1}
+                sx={modalStyle}
               >
-                <Typography fontSize={20}>
+                <Typography fontSize={20} sx={{ mb: 4 }} textAlign="center">
                   Are your sure you want to delete "{event.title}" event?
                 </Typography>
                 <Button fullWidth onClick={handleDelete} color='error' variant='contained'>Confirm Delete</Button>
+                <Button fullWidth onClick={() => setConfirmDeleteOpen(false)} color='inherit' variant='outlined'>Cancel</Button>
               </Stack>
             </Modal>
           </Stack>
-        ) : <Box pt={2}/>
+        ) : <Box pt={2} />
       }
-      <Typography
-        fontSize={30}
-        color="primary"
-        fontWeight={600}
-      >
-        {event.title}
-      </Typography>
+      <Box sx={{ mb: 3, pb: 2, '&:hover': { backgroundColor: 'grey.400', borderRadius: 1 } }}>
+        <Link href={`/event/${event._id}`} style={{ textDecoration: 'none' }}>
+          <Typography
+            fontSize={30}
+            color="primary"
+            fontWeight={600}
+          >
+            {event.title}
+          </Typography>
 
-      <Typography
-        fontSize={20}
-        color="text.secondary"
-        sx={{mb: 4}}
-      >
-        {event.desc}
-      </Typography>
+          <Typography
+            fontSize={20}
+            color="text.secondary"
+          >
+            {event.desc}
+          </Typography>
+        </Link>
+      </Box>
 
       <Typography
         fontSize={18}
@@ -128,7 +175,34 @@ const EventCard = ({ event }) => {
         {event.duration} day
       </Typography>
 
-      <Button color='primary' variant='contained' fullWidth>Book Event</Button>
+      {
+        !ticketBooked ?
+          <Button
+            color='primary' variant='contained' fullWidth
+            onClick={openConfirmBook}
+          >
+            Book Ticket
+          </Button>
+          :
+          <Button color='primary' variant='contained' fullWidth disabled startIcon={<CheckCircleIcon />}>
+            Ticket Booked
+          </Button>
+      }
+      <Modal
+        open={confirmBookOpen}
+        onClose={() => setConfirmBookOpen(false)}
+      >
+        <Stack
+          direction="column" gap={1}
+          sx={modalStyle}
+        >
+          <Typography fontSize={20} sx={{ mb: 4 }} textAlign="center">
+            Are your sure you want to book a ticket for "{event.title}" event?
+          </Typography>
+          <Button fullWidth onClick={handleBook} color='success' variant='contained'>Confirm Book</Button>
+          <Button fullWidth onClick={() => setConfirmBookOpen(false)} color='inherit' variant='outlined'>Cancel</Button>
+        </Stack>
+      </Modal>
     </Stack>
   )
 }

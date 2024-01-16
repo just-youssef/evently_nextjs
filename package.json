@@ -17,6 +17,7 @@
     "@mui/material": "^5.15.2",
     "@mui/material-nextjs": "^5.15.0",
     "@mui/x-date-pickers": "^6.19.0",
+    "@react-native-async-storage/async-storage": "^1.21.0",
     "@reduxjs/toolkit": "^2.0.1",
     "dayjs": "^1.11.10",
     "debounce": "^2.0.0",
