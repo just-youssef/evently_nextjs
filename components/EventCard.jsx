@@ -178,16 +178,16 @@ const EventCard = ({ event }) => {
       <Box sx={{flexGrow: 1}} />
 
       {
-        !ticketBooked ?
+        token && ticketBooked ?
+          <Button color='primary' variant='contained' fullWidth disabled startIcon={<CheckCircleIcon />}>
+            Ticket Booked
+          </Button>
+          :
           <Button
             color='primary' variant='contained' fullWidth
             onClick={openConfirmBook}
           >
             Book Ticket
-          </Button>
-          :
-          <Button color='primary' variant='contained' fullWidth disabled startIcon={<CheckCircleIcon />}>
-            Ticket Booked
           </Button>
       }
       <Modal
