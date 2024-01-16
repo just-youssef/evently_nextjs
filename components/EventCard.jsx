@@ -106,7 +106,7 @@ const EventCard = ({ event }) => {
       justifyContent="center"
       bgcolor="background.paper" boxShadow={4}
       border={1} borderRadius={1} borderColor="grey.600"
-      px={3} pb={5} pt={3}
+      px={3} pb={5} pt={3} minHeight={400}
     >
       {
         (token && currentUserID == event.organizer._id) ? (
@@ -132,7 +132,7 @@ const EventCard = ({ event }) => {
           </Stack>
         ) : <Box pt={2} />
       }
-      <Box sx={{ mb: 3, pb: 2, '&:hover': { backgroundColor: 'grey.400', borderRadius: 1 } }}>
+      <Box sx={{ mb: 3, pb: 2, '&:hover': { backgroundColor: 'divider', borderRadius: 1 } }}>
         <Link href={`/event/${event._id}`} style={{ textDecoration: 'none' }}>
           <Typography
             fontSize={30}
@@ -169,11 +169,13 @@ const EventCard = ({ event }) => {
 
       <Typography
         fontSize={18}
-        sx={{ display: "flex", alignItems: "center", gap: 0.6, mb: 5 }}
+        sx={{ display: "flex", alignItems: "center", gap: 0.6 }}
       >
         <TimelapseIcon />
         {event.duration} day
       </Typography>
+
+      <Box sx={{flexGrow: 1}} />
 
       {
         !ticketBooked ?
