@@ -41,7 +41,7 @@ const EventDetails = ({ params }) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: {xs: 2/3, md: 1/2, lg: 1/3},
+    width: {xs:3/4, sm: 2/3, md: 1/2, lg: 1/3},
     bgcolor: 'background.paper',
     border: 1,
     borderRadius: 1,
@@ -106,7 +106,7 @@ const EventDetails = ({ params }) => {
             sx={modalStyle}
           >
             <Typography
-              fontSize={30}
+              fontSize={28}
               color="primary"
               fontWeight={600}
               sx={{ display: "flex", alignItems: "center", gap: 1 }}
@@ -118,9 +118,9 @@ const EventDetails = ({ params }) => {
             <Box component="ol" pl={3}>
               {
                 whoIsGoing.map((user) => (
-                  <Typography component="li" key={user.email} fontSize={22}>
+                  <Typography component="li" key={user.email} fontSize={{xs: 18, sm: 20}}>
                     {user.username}
-                    <Box component="span" fontSize={18} color="text.secondary" pl={4}>
+                    <Box component="span" fontSize={{xs: 14, sm:16}} color="text.secondary" pl={4}>
                       ({user.email})
                     </Box>
                   </Typography>
