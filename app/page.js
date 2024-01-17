@@ -26,7 +26,7 @@ const Home = () => {
     <Grid container spacing={4} p={4}>
       {
         allEvents.map((event)=>(
-          <Grid item xs={12} md={6} lg={4} key={event._id}>
+          <Grid item xs={12} md={6} lg={4} xl={3} key={event._id}>
             <EventCard event={event} />
           </Grid>
         ))
