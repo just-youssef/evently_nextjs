@@ -61,7 +61,7 @@ const Login = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        px: 4,
+        px: {xs:2, sm: 4},
         py: 6,
         my: 8,
         bgcolor: "background.paper",
@@ -70,7 +70,7 @@ const Login = () => {
         borderColor: "grey.600",
         alignItems: "center",
         width: { sm: 2 / 3, md: 1 / 2, lg: 1 / 3 },
-        mx: { xs: 2, sm: "auto" },
+        mx: { xs: 3, sm: "auto" },
         boxShadow: 8,
         gap: 1,
       }}

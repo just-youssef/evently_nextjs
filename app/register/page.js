@@ -65,9 +65,9 @@ const Register = () => {
     <Stack
       component="form" onSubmit={handleRegister}
       direction="column" alignItems="center"
-      px={4} py={6} my={8} gap={1}
+      px={{xs:2, sm:4}} py={6} my={8} gap={1}
       border={1} borderRadius={1} borderColor="grey.600"
-      width={{ sm: 2 / 3, md: 1 / 2, lg: 1 / 3 }} mx={{ xs: 2, sm: "auto" }}
+      width={{ sm: 2 / 3, md: 1 / 2, lg: 1 / 3 }} mx={{ xs: 3, sm: "auto" }}
       bgcolor="background.paper" boxShadow={8}
     >
       <Typography fontSize={24} color="text.secondary">Register to Evently</Typography>

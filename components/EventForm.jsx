@@ -12,7 +12,7 @@ const EventForm = ({ type, event, setEvent, handleSubmit }) => {
     <Stack
       component="form" onSubmit={handleSubmit}
       direction="column" alignItems="center"
-      px={4} py={6} my={4} gap={1}
+      px={{xs:2, sm:4}} py={6} my={4} gap={1}
       border={1} borderRadius={1} borderColor="grey.600"
       width={{ sm: 2 / 3, md: 1 / 2 }} mx={{ xs: 2, sm: "auto" }}
       bgcolor="background.paper" boxShadow={8}

@@ -23,7 +23,7 @@ const Home = () => {
   }, [allEvents])
 
   return (
-    <Grid container spacing={4} p={4}>
+    <Grid container spacing={4} px={{xs:3, sm:4}} py={4}>
       {
         allEvents.map((event)=>(
           <Grid item xs={12} md={6} lg={4} xl={3} key={event._id}>

@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
     <Stack
       direction="row" alignItems="center" justifyContent="space-between"
-      sx={{ px: 4, py: 1, boxShadow: 5, bgcolor: "background.paper" }}
+      sx={{ px: {xs:3, sm: 4}, py: 1, boxShadow: 5, bgcolor: "background.paper" }}
     >
       <Stack
         direction="row"
@@ -76,7 +76,7 @@ const Navbar = () => {
               <IconButton
                 onClick={() => router.push("/addEvent")}
                 sx={{ display: { sm: 'none' } }}
-                color='primary'
+                color='primary' 
               >
                 <AddToPhotosIcon />
               </IconButton>
