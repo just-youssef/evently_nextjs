@@ -70,12 +70,12 @@ const EventDetails = ({ params }) => {
           Who is going?
         </Typography>
 
-        <Box component="ol" pl={3}>
+        <Box component="ol" pl={6}>
           {
             whoIsGoing.slice(0, 5).map((user) => (
               <Typography component="li" key={user.email} fontSize={22}>
                 {user.username}
-                <Box component="span" fontSize={18} color="text.secondary" pl={4}>
+                <Box component="span" fontSize={18} color="text.secondary" pl={4} sx={{display: {xs: 'none', sm: "inline"}}}>
                   ({user.email})
                 </Box>
               </Typography>
