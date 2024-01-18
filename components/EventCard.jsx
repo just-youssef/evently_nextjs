@@ -49,7 +49,7 @@ const EventCard = ({ event }) => {
     setConfirmDeleteOpen(false);
 
     try {
-      await fetch(`http://localhost:8000/api/event/${event._id}`, {
+      await fetch(`${process.env.API_ROOT}/event/${event._id}`, {
         method: "DELETE",
         headers: {
           'x-auth-token': token,
@@ -64,7 +64,7 @@ const EventCard = ({ event }) => {
     setConfirmBookOpen(false);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/ticket/${event._id}`, {
+      const res = await fetch(`${process.env.API_ROOT}/ticket/${event._id}`, {
         method: "POST",
         headers: {
           'x-auth-token': token,
