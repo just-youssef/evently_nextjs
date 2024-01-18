@@ -24,7 +24,7 @@ const Login = () => {
     setPasswordError({ value: false, msg: "" });
 
     try {
-      const res = await fetch("http://localhost:8000/api/user/login", {
+      const res = await fetch(`${process.env.API_ROOT}/user/login`, {
         method: "POST",
         headers: {
           Accept: "application/json",

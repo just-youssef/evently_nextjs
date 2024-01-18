@@ -22,7 +22,7 @@ const AddEvent = () => {
     e.preventDefault();
     
     try {
-      const res = await fetch("http://localhost:8000/api/event/new", {
+      const res = await fetch(`${process.env.API_ROOT}/event/new`, {
         method: "POST",
         headers: {
           'x-auth-token': token,

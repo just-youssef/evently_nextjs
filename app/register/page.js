@@ -29,7 +29,7 @@ const Register = () => {
     setConfirmPasswordError({ value: false, msg: "" });
 
     try {
-      const res = await fetch("http://localhost:8000/api/user/register", {
+      const res = await fetch(`${process.env.API_ROOT}/user/register`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',

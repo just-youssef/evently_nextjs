@@ -13,7 +13,7 @@ const EventDetails = ({ params }) => {
   useEffect(() => {
     const getEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/event/${params.id}`);
+        const res = await fetch(`${process.env.API_ROOT}/event/${params.id}`);
         const data = await res.json();
 
         setEvent(data);
@@ -25,7 +25,7 @@ const EventDetails = ({ params }) => {
 
     const getWhoIsGoing = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/ticket/whoisgoing/${params.id}`);
+        const res = await fetch(`${process.env.API_ROOT}/ticket/whoisgoing/${params.id}`);
         const data = await res.json();
 
         setWhoIsGoing(data);

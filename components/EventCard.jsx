@@ -29,7 +29,7 @@ const EventCard = ({ event }) => {
 
     const checkTicketBook = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/ticket/${event._id}`, {
+        const res = await fetch(`${process.env.API_ROOT}/ticket/${event._id}`, {
           headers: {
             'x-auth-token': token,
           }
@@ -172,7 +172,7 @@ const EventCard = ({ event }) => {
         sx={{ display: "flex", alignItems: "center", gap: 0.6 }}
       >
         <TimelapseIcon />
-        {event.duration} day
+        {event.duration} day(s)
       </Typography>
 
       <Box sx={{flexGrow: 1}} />

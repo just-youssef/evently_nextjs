@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const getAllEvents = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/event/`);
+        const res = await fetch(`${process.env.API_ROOT}/event/`);
         const data = await res.json();
         
         setAllEvents(data);
