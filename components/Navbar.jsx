@@ -1,6 +1,6 @@
 "use client"
 
-import { Typography, IconButton, Button, Stack } from '@mui/material';
+import { Typography, IconButton, Button, Stack, Box } from '@mui/material';
 import EventIcon from '@mui/icons-material/Event';
 import { useRouter } from "next/navigation";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -33,23 +33,19 @@ const Navbar = () => {
         direction="row"
         alignItems="center"
       >
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="refresh"
-          onClick={() => { router.push('/') }}
-        >
-          <EventIcon />
-        </IconButton>
-
-        <Typography
-          fontSize={25}
-          component="div"
-          sx={{ display: { xs: 'none', sm: 'block' } }}
-        >
-          Evently
-        </Typography>
+        <Link href="/" style={{textDecoration: "none"}}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.4, color: "text.primary"}}>
+            <EventIcon />
+            <Typography
+              fontSize={25}
+              fontWeight={600}
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              Evently
+            </Typography>
+          </Box>
+        </Link>
       </Stack>
 
       <Stack direction="row" gap={1} alignItems="center">
