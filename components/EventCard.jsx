@@ -82,15 +82,13 @@ const EventCard = ({ event }) => {
 
   const modalStyle = {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
+    top: '50%', left: '50%',
     transform: 'translate(-50%, -50%)',
     width: { xs: 2 / 3, md: 1 / 2, lg: 1 / 3 },
     bgcolor: 'background.paper',
-    border: 1,
-    borderRadius: 1,
+    border: 1, borderRadius: 1,
     boxShadow: 24,
-    p: 4,
+    px:{xs:2, sm: 4}, p:4
   };
 
   const openConfirmBook = () => {
