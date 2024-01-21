@@ -22,19 +22,15 @@ const EventCard = ({ event }) => {
   const [ticketBooked, setTicketBooked] = useState(false);
 
   useEffect(() => {
-    if (token) {
-      const { userID } = jwt.decode(token);
-      setCurrentUserID(userID);
-    }
-
     const checkTicketBook = async () => {
       try {
-        const res = await fetch(`${process.env.API_ROOT}/ticket/${event._id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/ticket/${event._id}`, {
           headers: {
             'x-auth-token': token,
           }
         });
-        if (res.ok) {
+        const booked = await res.json();
+        if (booked) {
           setTicketBooked(true)
         }
       } catch (error) {
@@ -42,14 +38,19 @@ const EventCard = ({ event }) => {
       }
     }
 
-    checkTicketBook();
+    if (token) {
+      const { userID } = jwt.decode(token);
+      setCurrentUserID(userID);
+
+      checkTicketBook();
+    }
   }, [token, ticketBooked])
 
   const handleDelete = async () => {
     setConfirmDeleteOpen(false);
 
     try {
-      await fetch(`${process.env.API_ROOT}/event/${event._id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/event/${event._id}`, {
         method: "DELETE",
         headers: {
           'x-auth-token': token,
@@ -64,7 +65,7 @@ const EventCard = ({ event }) => {
     setConfirmBookOpen(false);
 
     try {
-      const res = await fetch(`${process.env.API_ROOT}/ticket/${event._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/ticket/${event._id}`, {
         method: "POST",
         headers: {
           'x-auth-token': token,

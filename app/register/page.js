@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, IconButton, Stack, TextField, Typography } from "@mui/material"
+import { Box, Button, IconButton, Stack, TextField, Typography } from "@mui/material"
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { useRouter, redirect } from "next/navigation";
@@ -29,7 +29,7 @@ const Register = () => {
     setConfirmPasswordError({ value: false, msg: "" });
 
     try {
-      const res = await fetch(`${process.env.API_ROOT}/user/register`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/user/register`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -47,7 +47,16 @@ const Register = () => {
       if (data.error) {
         if (data.error.username) setUsernameError({ value: true, msg: data.error.email })
         if (data.error.email) setEmailError({ value: true, msg: data.error.email })
-        if (data.error.password) setPasswordError({ value: true, msg: data.error.password })
+        if (data.error.password) setPasswordError({ value: true, msg:
+        <Box>
+          {data.error.password}
+          <Box component="ul" pl={3} my={0}>
+            <Box component="li">must be 8 chars length at least</Box>
+            <Box component="li">must contain 1 letter at least</Box>
+            <Box component="li">must contain 1 digit at least</Box>
+          </Box>
+        </Box>
+        })
         if (data.error.confirmPassword) setConfirmPasswordError({ value: true, msg: data.error.confirmPassword })
       }
 

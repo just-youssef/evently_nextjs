@@ -1,7 +1,6 @@
 "use client"
 
 import { Typography, IconButton, Button, Stack, Box } from '@mui/material';
-import EventIcon from '@mui/icons-material/Event';
 import { useRouter } from "next/navigation";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -21,7 +20,6 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch(clearToken())
-    // router.push('/')
   }
 
   return (
@@ -35,7 +33,7 @@ const Navbar = () => {
       >
         <Link href="/" style={{textDecoration: "none"}}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.4, color: "text.primary"}}>
-            <EventIcon />
+            <Box component='img' src='/logo.png' height={40} />
             <Typography
               fontSize={25}
               fontWeight={600}

@@ -13,7 +13,7 @@ const UpdateEvent = ({ params }) => {
   useEffect(()=>{
     const getEvent = async () => {
       try {
-        const res = await fetch(`${process.env.API_ROOT}/event/${params.id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/event/${params.id}`);
         const data = await res.json();
 
         setEvent({
@@ -36,7 +36,7 @@ const UpdateEvent = ({ params }) => {
     e.preventDefault();
     
     try {
-      const res = await fetch(`${process.env.API_ROOT}/event/${params.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/event/${params.id}`, {
         method: "PUT",
         headers: {
           'x-auth-token': token,

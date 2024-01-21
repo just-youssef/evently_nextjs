@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const getAllEvents = async () => {
       try {
-        const res = await fetch(`${process.env.API_ROOT}/event/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROOT}/event/`);
         const data = await res.json();
         
         setAllEvents(data);
